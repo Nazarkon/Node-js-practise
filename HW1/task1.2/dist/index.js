@@ -1,19 +1,26 @@
-"use strict";
+'use strict';
 
-var _fs = require("fs");
+var _fs = require('fs');
 
 var _fs2 = _interopRequireDefault(_fs);
 
+var _stream = require('stream');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var csvtojson = require("csvtojson");
+var csv = require("csvtojson");
+
+var readStream = _fs2.default.createReadStream("./csv/bookList.csv");
 
 var writeStream = _fs2.default.createWriteStream("./bookList.txt", 'UTF-8');
 
-csvtojson().fromFile('./csv/bookList.csv').then(function (data) {
-    data.map(function (item) {
-        writeStream.write(JSON.stringify(item) + "\n\n\n");
-    });
-}, function (err) {
-    console.error(err);
-});
+readStream.pipe(csv()).pipe(writeStream);
+
+// const csvStr = csvtojson().fromFile('./csv/bookList.csv').then((data) => {
+//         data.map((item) => {
+//             writeStream.write(`${JSON.stringify(item)}\n\n\n`)
+//         })
+
+//     },(err) => {
+//         console.error(err);
+//     })
