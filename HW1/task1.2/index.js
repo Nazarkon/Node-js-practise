@@ -1,6 +1,4 @@
 import fs from 'fs';
-import { pipeline } from 'stream';
-
 
 const csv = require("csvtojson");
  
