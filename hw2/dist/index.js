@@ -53,7 +53,11 @@ app.get('/users', function (req, res) {
 app.post('/user', validation(schema), function (req, res) {
     if (Object.entries(req.body).length !== 0) {
         users.push(req.body);
+<<<<<<< HEAD
         res.sendStatus(201);
+=======
+        res.sendStatus(200);
+>>>>>>> 3bf1b9f329e7a058ecc1dbed807ee34100a1a6e0
     } else {
         res.sendStatus(403);
     }
@@ -75,9 +79,16 @@ app.put('/user/:id', function (req, res) {
             password = _req$body.password,
             age = _req$body.age,
             isDeleted = _req$body.isDeleted;
+<<<<<<< HEAD
 
         var index = users.findIndex(function (item) {
             return item.id === parseInt(req.params.id, 10);
+=======
+        // eslint-disable-next-line radix
+
+        var index = users.findIndex(function (item) {
+            return item.id === parseInt(req.params.id);
+>>>>>>> 3bf1b9f329e7a058ecc1dbed807ee34100a1a6e0
         });
         console.log(users[index], 'users');
         if (login) {
@@ -92,15 +103,28 @@ app.put('/user/:id', function (req, res) {
         if (isDeleted) {
             users[index].isDeleted = isDeleted;
         }
+<<<<<<< HEAD
         res.end();
+=======
+        res.send('Successful changed');
+>>>>>>> 3bf1b9f329e7a058ecc1dbed807ee34100a1a6e0
     } else {
         res.sendStatus(403).send('No data provided');
     }
 });
 app.delete('/user/:id', function (req, res) {
+<<<<<<< HEAD
     var deletedUser = users.findIndex(function (item) {
         return item.id === parseInt(req.params.id, 10);
     });
+=======
+    // eslint-disable-next-line radix
+    var deletedUser = users.findIndex(function (item) {
+        return item.id === parseInt(req.params.id);
+    });
+    console.log(users, 'users');
+    console.log(deletedUser, 'deletedUser');
+>>>>>>> 3bf1b9f329e7a058ecc1dbed807ee34100a1a6e0
     if (deletedUser !== -1) {
         users[deletedUser].isDeleted = true;
         res.send('User is Deleted');

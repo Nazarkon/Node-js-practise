@@ -45,7 +45,11 @@ app.get('/users', (req, res) => {
 app.post('/user', validation(schema), (req, res) => {
     if (Object.entries(req.body).length !== 0) {
         users.push(req.body);
+<<<<<<< HEAD
         res.sendStatus(201);
+=======
+        res.sendStatus(200);
+>>>>>>> 3bf1b9f329e7a058ecc1dbed807ee34100a1a6e0
     } else {
         res.sendStatus(403);
     }
@@ -61,7 +65,12 @@ app.get('/user/:id', (req, res) => {
 app.put('/user/:id', (req, res) => {
     if (Object.values(req.body).length) {
         const { login, password, age, isDeleted } = req.body;
+<<<<<<< HEAD
         const index = users.findIndex((item) => item.id === parseInt(req.params.id, 10));
+=======
+        // eslint-disable-next-line radix
+        const index = users.findIndex((item) => item.id === parseInt(req.params.id));
+>>>>>>> 3bf1b9f329e7a058ecc1dbed807ee34100a1a6e0
         console.log(users[index], 'users');
         if (login) {
             users[index].login = login;
@@ -75,13 +84,22 @@ app.put('/user/:id', (req, res) => {
         if (isDeleted) {
             users[index].isDeleted = isDeleted;
         }
+<<<<<<< HEAD
         res.end();
+=======
+        res.send('Successful changed');
+>>>>>>> 3bf1b9f329e7a058ecc1dbed807ee34100a1a6e0
     } else {
         res.sendStatus(403).send('No data provided');
     }
 });
 app.delete('/user/:id', (req, res) => {
+<<<<<<< HEAD
     const deletedUser = users.findIndex((item) => item.id === parseInt(req.params.id, 10));
+=======
+    // eslint-disable-next-line radix
+    const deletedUser = users.findIndex((item) => item.id === parseInt(req.params.id));
+>>>>>>> 3bf1b9f329e7a058ecc1dbed807ee34100a1a6e0
     if (deletedUser !== -1) {
         users[deletedUser].isDeleted = true;
         res.send('User is Deleted');
