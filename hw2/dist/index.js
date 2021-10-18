@@ -53,7 +53,7 @@ app.get('/users', function (req, res) {
 app.post('/user', validation(schema), function (req, res) {
     if (Object.entries(req.body).length !== 0) {
         users.push(req.body);
-        res.sendStatus(200);
+        res.sendStatus(201);
     } else {
         res.sendStatus(403);
     }
@@ -75,10 +75,9 @@ app.put('/user/:id', function (req, res) {
             password = _req$body.password,
             age = _req$body.age,
             isDeleted = _req$body.isDeleted;
-        // eslint-disable-next-line radix
 
         var index = users.findIndex(function (item) {
-            return item.id === parseInt(req.params.id);
+            return item.id === parseInt(req.params.id, 10);
         });
         console.log(users[index], 'users');
         if (login) {
@@ -93,18 +92,15 @@ app.put('/user/:id', function (req, res) {
         if (isDeleted) {
             users[index].isDeleted = isDeleted;
         }
-        res.send('Successful changed');
+        res.end();
     } else {
         res.sendStatus(403).send('No data provided');
     }
 });
 app.delete('/user/:id', function (req, res) {
-    // eslint-disable-next-line radix
     var deletedUser = users.findIndex(function (item) {
-        return item.id === parseInt(req.params.id);
+        return item.id === parseInt(req.params.id, 10);
     });
-    console.log(users, 'users');
-    console.log(deletedUser, 'deletedUser');
     if (deletedUser !== -1) {
         users[deletedUser].isDeleted = true;
         res.send('User is Deleted');
