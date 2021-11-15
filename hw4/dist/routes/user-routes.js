@@ -26,7 +26,7 @@ var validation = function validation(userSchema) {
             error = _userSchema$validate.error;
 
         if (error) {
-            res.status(400).json(error.message);
+            res.status(400).json(error.message).end();
         }
         next();
     };
@@ -61,7 +61,7 @@ router.post('/user', validation(schema), async function (req, res) {
 router.get('/user/:id', async function (req, res) {
     try {
         var data = await getUserById(req.params.id);
-        res.send(data).status(200);
+        res.send(data).status(200).end();
     } catch (e) {
         res.send(e).status(400).end();
     }

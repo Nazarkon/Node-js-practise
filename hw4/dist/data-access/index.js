@@ -13,8 +13,10 @@ sequelize.authenticate().then(function () {
 });
 
 var user = require('../models/user')(sequelize);
+var groups = require('../models/groups')(sequelize);
 
 module.exports = {
     sequelize: sequelize,
-    user: user
+    user: user,
+    groups: groups
 };
