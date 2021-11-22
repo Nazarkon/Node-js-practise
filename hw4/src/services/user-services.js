@@ -1,5 +1,5 @@
 const db = require('../data-access/index');
-const User = db.user;
+const User = db.User;
 
 const getUsers = (loginSubstring, limit) => {
     return User.findAll({  where: {
@@ -12,15 +12,14 @@ const getUserById = (id) => {
     const userId = +id;
     return User.findAll({
         where: {
-            id: userId
+            userID: userId
         }
     })
 };
 
 const createUser = (body) => {
-        const { id, login, password, age, isDeleted } = body;
+        const { login, password, age, isDeleted } = body;
         return User.create({
-            id,
             login,
             password,
             age,
@@ -47,7 +46,7 @@ const updateUserById = (userId,body) => {
 
         return User.update(updateObject, {
             where: {
-                id: userId
+                userID: userId
             }
         })
 };
@@ -56,7 +55,7 @@ const deleteUserById = (id) => {
     const userId = +id;
     return User.destroy({
         where: {
-            id: userId
+            userID: userId
         }
     })
 };

@@ -12,11 +12,25 @@ sequelize
         console.error('Unable to connect to the database:', err);
     });
 
-const user = require('../models/user')(sequelize);
-const groups = require('../models/groups')(sequelize);
+const User = require('../models/user')(sequelize);
+const Groups = require('../models/groups')(sequelize);
+const UserGroup = require('../models/user-group')(sequelize);
+
+User.belongsToMany(Groups, { as: "User", through: UserGroup, foreignKey: 'UserId' });
+Groups.belongsToMany(User, { as: "Group", through: UserGroup, foreignKey: 'GroupId'});
+
+
+let user , group;
+
+sequelize.sync().then((res) => {
+    console.log("sync")
+}).catch(err => {
+    console.log(err)
+})
 
 module.exports = {
     sequelize,
-    user,
-    groups
+    User,
+    Groups,
+    UserGroup
 };

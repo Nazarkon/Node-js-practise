@@ -12,7 +12,6 @@ var _require = require('../services/user-services'),
     deleteUserById = _require.deleteUserById;
 
 var schema = Joi.object({
-    id: Joi.number().required(),
     login: Joi.string().min(3).max(30).required(),
     password: Joi.string().min(8).max(20).required(),
     age: Joi.number().min(4).max(130).required(),
@@ -60,7 +59,7 @@ router.post('/user', validation(schema), async function (req, res) {
 });
 router.get('/user/:id', async function (req, res) {
     try {
-        var data = await getUserById(req.params.id);
+        var data = await getUserById(+req.params.id);
         res.send(data).status(200).end();
     } catch (e) {
         res.send(e).status(400).end();
@@ -80,7 +79,7 @@ router.put('/user/:id', validation(schema), async function (req, res) {
 });
 router.delete('/user/:id', async function (req, res) {
     try {
-        var data = deleteUserById(userId);
+        var data = await deleteUserById(+req.params.id);
         res.send("Deleted").status(200).end();
     } catch (e) {
         res.send(e).status(400).end();

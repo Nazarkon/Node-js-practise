@@ -4,18 +4,19 @@ var _require = require('sequelize'),
     DataTypes = _require.DataTypes;
 
 module.exports = function (sequelize) {
-    return sequelize.define('Groups', {
+    return sequelize.define('groups', {
         id: {
-            type: DataTypes.STRING,
-            primaryKey: true,
-            allowNull: false
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            primaryKey: true
         },
         name: {
             type: DataTypes.STRING,
             allowNull: false
         },
         permissions: {
-            type: DataTypes.STRING,
+            type: DataTypes.ARRAY(DataTypes.STRING),
+            defaultValue: null,
             allowNull: false
         }
     }, {
