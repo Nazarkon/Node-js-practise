@@ -1,7 +1,7 @@
 'use strict';
 
 var db = require('../data-access/index');
-var User = db.user;
+var User = db.User;
 
 var getUsers = function getUsers(loginSubstring, limit) {
     return User.findAll({ where: {
@@ -14,20 +14,18 @@ var getUserById = function getUserById(id) {
     var userId = +id;
     return User.findAll({
         where: {
-            id: userId
+            userID: userId
         }
     });
 };
 
 var createUser = function createUser(body) {
-    var id = body.id,
-        login = body.login,
+    var login = body.login,
         password = body.password,
         age = body.age,
         isDeleted = body.isDeleted;
 
     return User.create({
-        id: id,
         login: login,
         password: password,
         age: age,
@@ -57,7 +55,7 @@ var updateUserById = function updateUserById(userId, body) {
 
     return User.update(updateObject, {
         where: {
-            id: userId
+            userID: userId
         }
     });
 };
@@ -66,7 +64,7 @@ var deleteUserById = function deleteUserById(id) {
     var userId = +id;
     return User.destroy({
         where: {
-            id: userId
+            userID: userId
         }
     });
 };
