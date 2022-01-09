@@ -1,21 +1,40 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
+var appRoot = require('app-root-path');
 var winston = require('winston');
-var createLogger = winston.createLogger,
-    format = winston.format,
-    transports = winston.transports;
-var logger = exports.logger = createLogger({
-    transports: [new transports.File({
-        filename: './logs/log.txt',
-        format: format.combine(format.timestamp({ format: 'MMM-DD-YYYY HH:mm:ss' }), format.align(), format.printf(function (info) {
-            return info.level + ': ' + [info.timestamp] + ': ' + info.message;
-        })) }), new transports.Console({
-        format: format.combine(format.timestamp({ format: 'MMM-DD-YYYY HH:mm:ss' }), format.align(), format.printf(function (info) {
-            return info.level + ': ' + [info.timestamp] + ':\n  ' + info.message;
-        })) })]
+
+// define the custom settings for each transport (file, console)
+var options = {
+  file: {
+    level: 'info',
+    filename: appRoot + '/logs/app.log',
+    handleExceptions: true,
+    json: true,
+    maxsize: 5242880, // 5MB
+    maxFiles: 5,
+    colorize: false
+  },
+  console: {
+    level: 'debug',
+    handleExceptions: true,
+    json: false,
+    colorize: true
+  }
+};
+
+// instantiate a new Winston Logger with the settings defined above
+var logger = new winston.createLogger({
+  transports: [new winston.transports.File(options.file), new winston.transports.Console(options.console)],
+  exitOnError: false // do not exit on handled exceptions
 });
 
-winston.add(logger);
+// create a stream object with a 'write' function that will be used by `morgan`
+logger.stream = {
+  write: function write(message, encoding) {
+    console.log(message, encoding);
+    // use the 'info' log level so the output will be picked up by both transports (file and console)
+    logger.info(message);
+  }
+};
+
+module.exports = logger;

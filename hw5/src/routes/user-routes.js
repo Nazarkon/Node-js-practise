@@ -2,7 +2,6 @@ const debug = require('debug')('express')
 , express = require('express')
 const Joi = require('joi');
 const router = express.Router();
-const { logger} = require('../helper/winstonLogger');
 const { getUsers, createUser, getUserById, updateUserById, deleteUserById } = require('../services/user-services');
 
 const schema = Joi.object({
@@ -30,10 +29,6 @@ router.get('/users', async (req,res, next) => {
     try{
     const data = await getUsers(loginSubstring, limit)
          res.send(data).status(200).end();
-         logger.info(`StatusCode: 200 \n
-                      loginSubstring: ${loginSubstring} \n
-                      limit: ${limit} \n
-                      method: ${req.method} \n`)
     }catch(e){
        next(e)
     }
@@ -43,12 +38,8 @@ router.post('/user', validation(schema), async (req,res, next) => {
         if (Object.entries(req.body).length !== 0) {
             const data = await createUser(req.body)
             res.send("Created").status(201).end();
-            logger.info(`StatusCode: 201 \n
-                         method: ${req.method} \n`)
         } else {
             res.status(400).end();
-            logger.info(`StatusCode: 400 \n
-                        method: ${req.method} \n`)
         }
     }catch(e){
         next(e)
@@ -59,9 +50,6 @@ router.get('/user/:id', async (req,res, next) => {
     try{
         const data = await getUserById(req.params.id)
         res.send(data).status(200).end();
-        logger.info(`StatusCode: 200 \n
-                     userId: ${req.params.id} \n
-                     method: ${req.method} \n`)
     }catch(e) {
         next(e)
     }
@@ -71,9 +59,6 @@ router.put('/user/:id',validation(schema),async (req,res) => {
         if (Object.values(req.body).length) {
             const data = await updateUserById(+req.params.id, req.body);
             res.send(data).status(201).end();
-            logger.info(`StatusCode: 201 \n
-                     userId: ${req.params.id} \n
-                     method: ${req.method} \n`)
         } else {
             res.status(400).end();
         }
@@ -86,9 +71,6 @@ router.delete('/user/:id', async(req,res, next) => {
     try{
         const data = await deleteUserById(+req.params.id);
         res.send("Deleted").status(200).end();
-        logger.info(`StatusCode: 200 \n
-                     userId: ${req.params.id} \n
-                     method: ${req.method} \n`)
 
     }catch(e){
         next(e)
