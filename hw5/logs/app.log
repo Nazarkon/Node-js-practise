@@ -1,0 +1,2 @@
+{"level":"info","message":"::1 - - [09/Jan/2022:16:54:39 +0000] \"GET /users?loginSubstring=nazarkon2&limit=2 HTTP/1.1\" 200 2 \"-\" \"PostmanRuntime/7.28.4\"\n"}
+{"level":"info","message":"::1 - - [09/Jan/2022:17:12:25 +0000] \"GET /users?loginSubstring=nazarkon2&limit=2 HTTP/1.1\" 200 2 \"-\" \"PostmanRuntime/7.28.4\"\n"}
