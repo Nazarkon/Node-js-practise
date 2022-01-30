@@ -3,7 +3,6 @@ const debug = require('debug')('express')
 const Joi = require('joi');
 const router = express.Router();
 const { getUsers, createUser, getUserById, updateUserById, deleteUserById } = require('../services/user-services');
-const  checkTokenEquality = require('../helper/authenticate')
 
 const schema = Joi.object({
     login: Joi.string().min(3).max(30).required(),
@@ -24,7 +23,7 @@ const validation = (userSchema) => {
     };
 };
 
-router.get('/users', checkTokenEquality , async (req,res, next) => {
+router.get('/users', async (req,res, next) => {
     debug(req.method + ' ' + req.url);
     const { loginSubstring = '', limit = 10 } = req.query;
     try{
@@ -47,7 +46,7 @@ router.post('/user', validation(schema), async (req,res, next) => {
     } 
 
 });
-router.get('/user/:id', checkTokenEquality , async (req,res, next) => {
+router.get('/user/:id', async (req,res, next) => {
     try{
         const data = await getUserById(req.params.id)
         res.send(data).status(200).end();
@@ -55,7 +54,7 @@ router.get('/user/:id', checkTokenEquality , async (req,res, next) => {
         next(e)
     }
 });
-router.put('/user/:id', checkTokenEquality, validation(schema),async (req,res) => {
+router.put('/user/:id',validation(schema),async (req,res) => {
     try{
         if (Object.values(req.body).length) {
             const data = await updateUserById(+req.params.id, req.body);
@@ -68,7 +67,7 @@ router.put('/user/:id', checkTokenEquality, validation(schema),async (req,res) =
     }
 
 });
-router.delete('/user/:id', checkTokenEquality,  async(req,res, next) => {
+router.delete('/user/:id', async(req,res, next) => {
     try{
         const data = await deleteUserById(+req.params.id);
         res.send("Deleted").status(200).end();

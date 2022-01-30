@@ -45,7 +45,7 @@ app.post('/authenticate', async function (req, res) {
     if(!user.length) {
         return res.status(401).send({
             success: false,
-            message: 'Bad username/password combination'
+            message: 'Bad username combination'
         })
     }
 
