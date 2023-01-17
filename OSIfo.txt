@@ -1,0 +1,8 @@
+{
+  "Home Dir": "C:\\Users\\mailf",
+  "Host name": "DESKTOP-CQEQM04",
+  "Platform": "win32",
+  "Temporary Dir": "C:\\Users\\mailf\\AppData\\Local\\Temp",
+  "OS Type": "Windows_NT",
+  "Kernel Version:": "Windows 10 Home"
+}
