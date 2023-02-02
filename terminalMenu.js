@@ -1,4 +1,6 @@
 const readline = require('readline');
+const { OSInformation } = require('./loggerUserOSVersion');
+const { createFile, readFile, findFileByName } = require('./fileSystemOperation');
 
 const { stdin, stdout } = require('process');
 
@@ -10,7 +12,7 @@ const rl = readline.createInterface({ input, output });
 const checkValue = (pickedValue) => {
     switch(pickedValue.trim()) {
         case '1' : 
-            console.log('1')
+            OSInformation()
             break;
         case '2' : 
             console.log('2')
